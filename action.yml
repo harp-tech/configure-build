@@ -1,5 +1,5 @@
 name: "Configure Harp Device Build"
-description: "Used to build Harp device projects with the Bonsai Foundation's standardized versioning and release scheme"
+description: "Used to build Harp device projects with the Bonsai Foundation standardized versioning and release scheme"
 author: "Bonsai Foundation"
 branding:
   icon: save

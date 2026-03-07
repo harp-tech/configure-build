@@ -283,6 +283,7 @@ async function main(): Promise<void> {
     core.info(`Configuring build environment to build${isForRelease ? ' and release' : ''} version ${version.format()}`);
     core.exportVariable('CiBuildVersion', version.format());
     core.exportVariable('CiIsForRelease', isForRelease ? 'true' : 'false');
+    core.exportVariable('CiFirmwarePreviewVersion', isForRelease ? 'v' : context.runNumber);
     core.setOutput('need-workflow-image-render', needWorkflowImageRender ? 'true' : 'false');
 }
 
