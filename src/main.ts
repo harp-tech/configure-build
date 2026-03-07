@@ -6,6 +6,7 @@ import { strict as assert } from 'assert';
 import * as fs from 'fs';
 import * as semver from 'semver';
 import { SemVer } from 'semver';
+import { getFirmwareVersion } from './harp';
 
 async function main(): Promise<void> {
     core.debug(`Starting action invocation`);
@@ -218,6 +219,34 @@ async function main(): Promise<void> {
     // (Don't use `semver.valid(version)`, it doesn't actually check anything when you do that!)
     if (!semver.valid(version.format())) {
         core.setFailed(`Internal error: Version '${version.format()} is not a valid semver!'`);
+    }
+
+    const metadataPath = "device.yml";
+    if (fs.existsSync(metadataPath)) {
+        core.info(`Determine version based off device metadata...`);
+        const firmwareVersion = getFirmwareVersion(metadataPath)
+        if (firmwareVersion === null) {
+            core.setFailed(`Internal error: Firmware version in '${metadataPath}' is not a valid semver!`)
+            return;
+        }
+
+        if (useFallbackVersion) {
+            if (firmwareVersion.major < version.major ||
+                firmwareVersion.major == version.major && firmwareVersion.minor < version.minor) {
+                core.setFailed(`Firmware version '${firmwareVersion.raw}' is lower than CI build version '${version.format()}'!`)
+                return;
+            }
+            else if (firmwareVersion > version) {
+                // Higher device metadata versions supersede fallback version major and minor
+                version.major = firmwareVersion.major
+                version.minor = firmwareVersion.minor;
+                version.patch = 0;
+            }
+        }
+        else if (firmwareVersion.major != version.major || firmwareVersion.minor != version.minor) {
+            core.setFailed(`Firmware version '${firmwareVersion.raw}' does not match specified version '${version.format()}'!`)
+            return;
+        }
     }
 
     //==============================================================================================================================================================

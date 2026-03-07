@@ -1,4 +1,4 @@
-name: "Configure Bonsai Package Build"
+name: "Configure Harp Device Build"
 description: "Used to apply the Bonsai Foundation's standardized versioning and release scheme"
 author: "Bonsai Foundation"
 branding:
