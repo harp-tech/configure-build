@@ -20,13 +20,13 @@ jobs:
     steps:
       # ----------------------------------------------------------------------- Checkout
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       # ----------------------------------------------------------------------- Setup tools
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
-          node-version: 20
+          node-version: 24
           cache: npm
 
       # ----------------------------------------------------------------------- Build action
@@ -41,7 +41,7 @@ jobs:
 
       # ----------------------------------------------------------------------- Verify nothing changed
       # Developers are expected to push the updated `dist` folder with every commit as this will
-      # later be required for testing and allows using intermediat commits on GitHub Actions when
+      # later be required for testing and allows using intermediate commits on GitHub Actions when
       # it is necessary.
       - name: Verify dist folder was up-to-date
         id: verify-dist
@@ -51,7 +51,7 @@ jobs:
 
       - name: Upload artifacts for debugging
         if: steps.verify-dist.outcome != 'success' && always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: dist
           path: dist/**

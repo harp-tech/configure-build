@@ -19,5 +19,5 @@ outputs:
     description: "`true` if there are Bonsai workflows that need to be rendered for the documentation website."
 #outputs:
 runs:
-  using: 'node20'
+  using: 'node24'
   main: 'dist/main.js'
