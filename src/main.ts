@@ -236,7 +236,7 @@ async function main(): Promise<void> {
                 core.setFailed(`Firmware version '${firmwareVersion.raw}' is lower than CI build version '${version.format()}'!`)
                 return;
             }
-            else if (firmwareVersion > version) {
+            else if (firmwareVersion.major != version.major || firmwareVersion.minor != version.minor) {
                 // Higher device metadata versions supersede fallback version major and minor
                 version.major = firmwareVersion.major
                 version.minor = firmwareVersion.minor;
