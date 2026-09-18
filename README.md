@@ -21,7 +21,7 @@ The action exports two environment variables for later steps to consume:
 
 This fork exports one further variable:
 
-- `CiFirmwarePreviewVersion` is the workflow run number on a continuous-integration build, and `v` on a release.
+- `CiFirmwarePreviewVersion` is the workflow run number on a continuous-integration build, and `v` on a release, which the firmware Makefiles treat as no preview suffix.
 
 It also sets the `need-workflow-image-render` output, which is `true` when the repository contains Bonsai workflows that need images rendered for the documentation website. Expose it as a job output so later jobs can decide whether to run the rendering step:
 
