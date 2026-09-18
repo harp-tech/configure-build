@@ -32,7 +32,7 @@ async function main(): Promise<void> {
         isForRelease = true;
         const releaseVersionString = context.payload.release.tag_name;
         if (!releaseVersionString) {
-            core.setFailed("Release verison is missing!");
+            core.setFailed("Release version is missing!");
             return;
         }
 
@@ -96,7 +96,7 @@ async function main(): Promise<void> {
 
     // Determine fallback version based off of most recent release
     if (useFallbackVersion) {
-        assert(!version && context.eventName != 'release', "Should not want fallback version when we have a verison or we're released!");
+        assert(!version && context.eventName != 'release', "Should not want fallback version when we have a version or we're released!");
 
         core.info(`Determining version to use based off of last release version...`);
         const token = core.getInput('repo-token', { required: true });
@@ -146,7 +146,7 @@ async function main(): Promise<void> {
                 //
                 // We don't want to assume that pre-release versions will always be marked as pre-release releases, so don't rely on that aspect.
                 // (Having releases marked as pre-releases has some visibility downsides on GitHub, so it's sensible to remove the designation)
-                core.info("Verison is a pre-release version, CI verison will be the same except without a the pre-release suffix");
+                core.info("Version is a pre-release version, CI version will be the same except without the pre-release suffix");
                 version.prerelease = []
                 version.format();
             } else {
@@ -199,7 +199,7 @@ async function main(): Promise<void> {
 
     // Final version validation
     if (!version) {
-        core.setFailed("Did not determine the verison number to use.");
+        core.setFailed("Did not determine the version number to use.");
         return;
     }
 
@@ -218,7 +218,7 @@ async function main(): Promise<void> {
     // Make sure none of our modifications broke the semver format
     // (Don't use `semver.valid(version)`, it doesn't actually check anything when you do that!)
     if (!semver.valid(version.format())) {
-        core.setFailed(`Internal error: Version '${version.format()} is not a valid semver!'`);
+        core.setFailed(`Internal error: Version '${version.format()}' is not a valid semver!`);
     }
 
     const metadataPath = "device.yml";
@@ -287,7 +287,7 @@ async function main(): Promise<void> {
     core.setOutput('need-workflow-image-render', needWorkflowImageRender ? 'true' : 'false');
 }
 
-// Node's default error printer is extremely obnoxious and tries to be "helpful" by printing the source line where the exception ocurred
+// Node's default error printer is extremely obnoxious and tries to be "helpful" by printing the source line where the exception occurred
 // This is all well and good, but sometimes the source map lookup fails and it just barfs an extremely long minified source line which is
 // not only useless but makes the log much more annoying to read. This behavior is implemented in `GetErrorSource` in `node_errors.cc` and
 // seemingly cannot be disabled directly except by overriding the uncaught exception handler, so that's what we do. :/

@@ -4,7 +4,7 @@
   "scripts": {
     "build": "npm run build-entrypoint -- src/main.ts --outfile=dist/main.js",
     "watch": "npm run build-entrypoint -- src/main.ts --outfile=dist/main.js --watch",
-    "build-entrypoint": "esbuild --bundle --platform=node --target=node20 --minify --sourcemap --sources-content=false",
+    "build-entrypoint": "esbuild --bundle --platform=node --target=node24 --minify --sourcemap --sources-content=false",
     "verify": "tsc --noEmit"
   },
   "dependencies": {
@@ -14,7 +14,7 @@
     "semver": "^7.7.1"
   },
   "devDependencies": {
-    "@types/node": "^22.15.17",
+    "@types/node": "^24.0.0",
     "@types/semver": "^7.7.0",
     "esbuild": "0.25.4",
     "typescript": "^5.8.3",
